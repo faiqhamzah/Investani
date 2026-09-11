@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#11764d">
+<title>AGRO-SAFE</title>
+<style>
+:root{
+ --g:#11764d;--g2:#1c9162;--g3:#dff5e9;--dark:#15372b;--text:#263a32;
+ --muted:#7b8982;--line:#e8eeeb;--bg:#f7f9f8;--white:#fff;
+ --orange:#e99a35;--red:#db5d5d;--blue:#4c86d8;--shadow:0 8px 25px rgba(19,58,42,.08)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+button,input{font:inherit}button{border:0;cursor:pointer}
+.app{min-height:100vh;max-width:1180px;margin:auto;background:var(--bg)}
+.desktop-nav{display:none}
+main{padding-bottom:82px}
+.screen{display:none}.screen.active{display:block}
+.top{background:linear-gradient(145deg,#116e48,#239667);color:#fff;padding:18px 18px 26px;border-radius:0 0 28px 28px}
+.status{display:flex;justify-content:space-between;font-size:12px;font-weight:700;opacity:.96;margin-bottom:18px}
+.greet{display:flex;justify-content:space-between;align-items:center}
+.greet h1{font-size:21px;margin:0 0 4px}.greet p{font-size:12px;margin:0;color:#d9f1e5}
+.avatar{width:42px;height:42px;border-radius:50%;background:#e7f7ee;color:var(--g);display:grid;place-items:center;font-weight:900;border:2px solid rgba(255,255,255,.6)}
+.notif{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:20px}
+.notif i{position:absolute;right:0;top:0;background:#f09a3c;color:#fff;border-radius:20px;font-style:normal;font-size:8px;padding:3px 5px}
+.hero-card{margin:-4px 16px 0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:19px;box-shadow:0 12px 32px rgba(20,63,45,.13);position:relative}
+.hero-label{font-size:11px;color:var(--muted)}.hero-amount{font-size:27px;font-weight:850;color:var(--dark);margin:5px 0 14px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);padding-top:14px;gap:14px}
+.hero-grid div+div{border-left:1px solid var(--line);padding-left:14px}.hero-grid b{font-size:15px}.hero-grid span{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}
+.search{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px 14px;color:#9aa59f;margin:16px 16px 4px;box-shadow:0 3px 12px rgba(0,0,0,.03)}
+.search input{border:0;outline:0;background:transparent;width:100%;font-size:12px;color:var(--text)}
+.section{padding:0 16px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:19px 0 11px}.section-head h2{font-size:15px;margin:0;color:var(--dark)}.section-head button{background:none;color:var(--g);font-size:10px;font-weight:800}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.quick-item{text-align:center;font-size:10px;color:#4d5e56}.quick-icon{width:52px;height:52px;margin:auto auto 7px;border-radius:17px;background:#e5f3ed;display:grid;place-items:center;font-size:22px;box-shadow:0 5px 12px rgba(17,118,77,.08)}.quick-item:active .quick-icon{transform:scale(.95)}
+.project-scroll{display:flex;gap:12px;overflow-x:auto;padding:2px 1px 8px;scrollbar-width:none}.project-scroll::-webkit-scrollbar{display:none}
+.project{min-width:235px;background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:var(--shadow)}
+.project-cover{height:84px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#d6eedb,#edf7e7)}.crop{font-size:35px}.badge{font-size:8px;font-weight:850;background:#fff;color:var(--g);border-radius:20px;padding:5px 7px}
+.project-body{padding:12px}.project h3{font-size:13px;margin:0 0 4px}.meta{font-size:9px;color:var(--muted)}.p-row{display:flex;justify-content:space-between;margin-top:11px}.p-row span{font-size:9px;color:var(--muted)}.p-row b{display:block;font-size:11px;color:var(--dark);margin-top:2px}
+.progress{height:6px;background:#edf1ef;border-radius:99px;overflow:hidden;margin:8px 0 5px}.progress i{display:block;height:100%;background:var(--g);border-radius:99px}
+.alert{display:flex;gap:10px;align-items:flex-start;background:#fff7e9;border:1px solid #f3e1bc;border-radius:14px;padding:12px}.alert-icon{font-size:18px}.alert b{font-size:11px}.alert p{font-size:9px;color:#776d5c;margin:3px 0 0;line-height:1.45}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.feature{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;display:flex;gap:10px;align-items:center}.feature-icon{width:35px;height:35px;border-radius:11px;background:#eef7f2;display:grid;place-items:center}.feature b{font-size:10px}.feature span{display:block;font-size:8px;color:var(--muted);margin-top:2px}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(1180px,100%);height:72px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:10;padding:7px 7px calc(7px + env(safe-area-inset-bottom))}
+.bottom button{background:none;color:#9aa39f;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:4px}.bottom button span{font-size:20px}.bottom button.active{color:var(--g);font-weight:800}
+.scan{width:54px!important;height:54px;background:var(--g)!important;color:#fff!important;border-radius:50%;margin-top:-23px;box-shadow:0 5px 18px rgba(17,118,77,.3);border:5px solid #e4f3eb}.scan span{font-size:22px!important}
+.page{padding:18px 16px}.page-title{font-size:21px;margin:0;color:var(--dark)}.page-sub{font-size:11px;color:var(--muted);margin:5px 0 18px}
+.back{background:#eaf5ef;color:var(--g);padding:8px 10px;border-radius:9px;font-size:10px;font-weight:800}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.hero-green{background:linear-gradient(145deg,#125f40,#209363);color:#fff;border-radius:18px;padding:19px;margin-bottom:14px}.hero-green h2{font-size:18px;margin:0 0 6px}.hero-green p{font-size:10px;line-height:1.5;color:#d8eee2;margin:0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f7faf8;border-radius:12px;padding:12px}.stat span{font-size:9px;color:var(--muted)}.stat b{display:block;font-size:16px;margin-top:4px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.flow div{text-align:center;padding:9px 3px;border-radius:9px;background:#f1f5f2;color:#85918b;font-size:8px}.flow .done{background:var(--g3);color:var(--g);font-weight:800}
+.timeline .step{display:flex;gap:10px;position:relative;padding-bottom:15px}.timeline .dot{width:22px;height:22px;border-radius:50%;background:#e9efeb;color:#7c8a83;display:grid;place-items:center;font-size:9px;flex:none}.timeline .done .dot{background:var(--g);color:#fff}.timeline .step:not(:last-child):after{content:"";position:absolute;left:10px;top:22px;height:calc(100% - 15px);width:2px;background:#e4ebe7}.timeline b{font-size:10px}.timeline p{font-size:9px;color:var(--muted);margin:3px 0}
+.table{width:100%;border-collapse:collapse;font-size:9px}.table th,.table td{padding:10px 5px;text-align:left;border-bottom:1px solid var(--line)}.table th{color:var(--muted);font-size:8px}
+.btn{padding:10px 12px;border-radius:10px;font-size:10px;font-weight:800}.primary{background:var(--g);color:#fff}.secondary{background:var(--g3);color:var(--g)}.full{width:100%}
+.score-wrap{text-align:center}.score{width:112px;height:112px;border-radius:50%;border:10px solid #dcefe4;border-top-color:var(--g);display:grid;place-items:center;margin:8px auto}.score b{font-size:26px;color:var(--g)}.low{color:var(--g)!important}.medium{color:#c48522!important}.high{color:var(--red)!important}
+.chart{height:150px;display:flex;align-items:flex-end;gap:9px;border-bottom:1px solid var(--line);padding:12px 3px 0}.bar{flex:1;background:#9bcbaa;border-radius:6px 6px 0 0;position:relative}.bar span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:7px;color:var(--muted)}
+.modal-bg{position:fixed;inset:0;background:rgba(13,36,26,.5);display:none;align-items:flex-end;justify-content:center;z-index:30}.modal-bg.show{display:flex}.modal{width:min(500px,100%);background:#fff;border-radius:22px 22px 0 0;padding:22px}.modal h3{margin:0;font-size:17px}.modal p{font-size:10px;color:var(--muted);line-height:1.5}.input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;margin:8px 0 12px;outline:0}.actions{display:flex;gap:8px}.actions .btn{flex:1}
+.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:#173c2d;color:#fff;padding:11px 15px;border-radius:12px;font-size:10px;z-index:40;display:none;white-space:nowrap}.toast.show{display:block}
+@media(min-width:760px){
+ body{background:#e9efeb}.app{background:var(--bg);box-shadow:0 0 50px rgba(0,0,0,.06)}main{padding-bottom:30px}.top{border-radius:0 0 34px 34px;padding:28px 34px 48px}.hero-card{margin:-25px 34px 0}.section{padding:0 34px}.search{margin-left:34px;margin-right:34px}.quick{grid-template-columns:repeat(8,1fr)}.quick-icon{width:58px;height:58px}.project{min-width:260px}.project-scroll{overflow:visible}.bottom{display:none}.page{padding:30px 34px}
+}
+@media(max-width:360px){.quick{gap:6px}.quick-icon{width:47px;height:47px}.quick-item{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<main>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen active">
+  <header class="top">
+    <div class="status"><span>08.40</span><span>● ● 100%</span></div>
+    <div class="greet">
+      <div><h1>Selamat pagi, Faiq 👋</h1><p>Kelola portofolio pertanianmu dengan aman.</p></div>
+      <div style="display:flex;gap:8px;align-items:center"><div class="notif">♧<i>9+</i></div><div class="avatar">F</div></div>
+    </div>
+  </header>
+
+  <div class="hero-card">
+    <span class="hero-label">Total Portofolio Pendanaan</span>
+    <div class="hero-amount" id="totalFund">Rp125.000.000</div>
+    <div class="hero-grid">
+      <div><span>Estimasi Imbal Hasil</span><b class="low">11,8%</b></div>
+      <div><span>Eksposur Risiko</span><b>Rp18,5 Jt</b></div>
+    </div>
+  </div>
+
+  <div class="search"><span>⌕</span><input placeholder="Cari proyek, komoditas, atau lokasi..." onfocus="showScreen('projects')"></div>
+
+  <div class="section">
+    <div class="section-head"><h2>Akses Cepat</h2><button onclick="showScreen('projects')">Lihat Semua</button></div>
+    <div class="quick">
+      <div class="quick-item" onclick="showScreen('projects')"><div class="quick-icon">🌱</div>Proyek</div>
+      <div class="quick-item" onclick="showScreen('financing')"><div class="quick-icon">◈</div>Escrow</div>
+      <div class="quick-item" onclick="showScreen('monitoring')"><div class="quick-icon">◉</div>Monitoring</div>
+      <div class="quick-item" onclick="showScreen('contracts')"><div class="quick-icon">▤</div>Kontrak</div>
+      <div class="quick-item" onclick="showScreen('risk')"><div class="quick-icon">△</div>Risiko</div>
+      <div class="quick-item" onclick="showScreen('risk')"><div class="quick-icon">🛡️</div>Asuransi</div>
+      <div class="quick-item" onclick="showScreen('settlement')"><div class="quick-icon">✓</div>Settlement</div>
+      <div class="quick-item" onclick="toast('Fitur profil dalam pengembangan.')"><div class="quick-icon">•••</div>Lainnya</div>
+    </div>
+
+    <div class="section-head"><h2>Proyek Aktif</h2><button onclick="showScreen('projects')">Lihat Semua</button></div>
+    <div class="project-scroll">
+      <article class="project"><div class="project-cover"><span class="crop">🌶️</span><span class="badge">RISIKO RENDAH</span></div><div class="project-body"><h3>Cabai Merah Premium</h3><div class="meta">Kediri · Pak Budi · 90 hari</div><div class="p-row"><div><span>Pendanaan</span><b>Rp18,4 Jt</b></div><div><span>Progress</span><b>68%</b></div></div><div class="progress"><i style="width:68%"></i></div><button class="btn secondary full" onclick="showScreen('detail')">Lihat Detail</button></div></article>
+      <article class="project"><div class="project-cover"><span class="crop">🌾</span><span class="badge">RISIKO RENDAH</span></div><div class="project-body"><h3>Padi IR-64</h3><div class="meta">Nganjuk · Bu Sari · 110 hari</div><div class="p-row"><div><span>Pendanaan</span><b>Rp26,0 Jt</b></div><div><span>Progress</span><b>82%</b></div></div><div class="progress"><i style="width:82%"></i></div><button class="btn secondary full" onclick="showScreen('monitoring')">Monitoring</button></div></article>
+      <article class="project"><div class="project-cover"><span class="crop">🌽</span><span class="badge" style="color:#c48522">SEDANG</span></div><div class="project-body"><h3>Jagung Blitar</h3><div class="meta">Blitar · Pak Joko · 100 hari</div><div class="p-row"><div><span>Pendanaan</span><b>Rp21,5 Jt</b></div><div><span>Progress</span><b>45%</b></div></div><div class="progress"><i style="width:45%"></i></div><button class="btn secondary full" onclick="showScreen('risk')">Lihat Risiko</button></div></article>
+    </div>
+
+    <div class="section-head"><h2>Perhatian Hari Ini</h2><span style="font-size:9px;color:var(--muted)">11 Sep 2026</span></div>
+    <div class="alert"><div class="alert-icon">⚠️</div><div><b>Potensi curah hujan tinggi</b><p>Proyek Jagung Blitar · Sistem merekomendasikan monitoring tambahan dalam 3 hari ke depan.</p></div></div>
+
+    <div class="section-head"><h2>Ekosistem AGRO-SAFE</h2></div>
+    <div class="feature-grid">
+      <div class="feature"><div class="feature-icon">👨‍🌾</div><div><b>Petani</b><span>Produksi terverifikasi</span></div></div>
+      <div class="feature"><div class="feature-icon">💼</div><div><b>Investor</b><span>Diversifikasi modal</span></div></div>
+      <div class="feature"><div class="feature-icon">🏪</div><div><b>Off-taker</b><span>Kepastian pasar</span></div></div>
+      <div class="feature"><div class="feature-icon">🛡️</div><div><b>Asuransi</b><span>Perlindungan risiko</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="screen">
+<div class="page">
+  <h1 class="page-title">Proyek Pertanian</h1><p class="page-sub">Temukan proyek berdasarkan potensi, risiko, dan kepastian pasar.</p>
+  <div class="hero-green"><h2>Smart Project Marketplace</h2><p>Setiap proyek melalui assessment, verifikasi, risk scoring, kontrak off-taker, dan monitoring sebelum settlement.</p></div>
+  <div class="card">
+    <div class="section-head" style="margin-top:0"><h2>Proyek Tersedia</h2><span style="font-size:9px;color:var(--muted)">3 proyek</span></div>
+    <table class="table"><tr><th>Komoditas</th><th>Risk</th><th>Funding</th><th></th></tr>
+    <tr><td><b>🌶️ Cabai</b><br>Kediri</td><td class="low"><b>88</b><br>Low</td><td>68%</td><td><button class="btn secondary" onclick="showScreen('detail')">Buka</button></td></tr>
+    <tr><td><b>🌾 Padi</b><br>Nganjuk</td><td class="low"><b>91</b><br>Low</td><td>82%</td><td><button class="btn secondary" onclick="showScreen('detail')">Buka</button></td></tr>
+    <tr><td><b>🌽 Jagung</b><br>Blitar</td><td class="medium"><b>69</b><br>Medium</td><td>45%</td><td><button class="btn secondary" onclick="showScreen('detail')">Buka</button></td></tr></table>
+  </div>
+</div>
+</section>
+
+<!-- DETAIL -->
+<section id="detail" class="screen">
+<div class="page">
+  <button class="back" onclick="showScreen('projects')">← Kembali</button>
+  <div class="section-head"><h2>Detail Proyek</h2><span class="badge">TERVERIFIKASI ✓</span></div>
+  <div class="card">
+    <h1 style="font-size:19px;margin:0 0 4px">🌶️ Cabai Merah Premium</h1><p class="page-sub">Desa Sukorejo, Kediri · Pak Budi · 1,2 ha</p>
+    <div class="stats"><div class="stat"><span>Durasi</span><b>90 hari</b></div><div class="stat"><span>Target panen</span><b>2,4 ton</b></div><div class="stat"><span>Kontrak</span><b>Rp25K/kg</b></div><div class="stat"><span>Funding</span><b>Rp27 Jt</b></div></div>
+  </div>
+  <div class="card score-wrap"><span class="hero-label">AGRICULTURAL RISK SCORE</span><div class="score"><b>88</b></div><b class="low">RISIKO RENDAH</b><p style="font-size:9px;color:var(--muted)">Berbasis data lahan, produksi, pasar, cuaca, dan rekam jejak.</p><button class="btn primary" onclick="showScreen('risk')">Lihat Analisis Risiko</button></div>
+  <div class="card"><div class="section-head" style="margin-top:0"><h2>AGRO-SAFE Workflow</h2><span style="font-size:9px;color:var(--muted)">6 / 8</span></div><div class="flow"><div class="done">1<br>Assessment</div><div class="done">2<br>Verification</div><div class="done">3<br>Risk Score</div><div class="done">4<br>Contract</div><div class="done">5<br>Funding</div><div class="done">6<br>Monitoring</div><div>7<br>Intervention</div><div>8<br>Settlement</div></div></div>
+  <div class="card"><div class="section-head" style="margin-top:0"><h2>Siap mendanai?</h2></div><div class="progress"><i style="width:68%"></i></div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:12px"><span>Rp18,4 Jt terkumpul</span><span>68%</span></div><button class="btn primary full" onclick="openFunding()">Danai Proyek · Simulasi</button></div>
+</div>
+</section>
+
+<!-- MONITORING -->
+<section id="monitoring" class="screen">
+<div class="page">
+  <h1 class="page-title">Monitoring</h1><p class="page-sub">Pantau perkembangan produksi secara berkala.</p>
+  <div class="hero-green"><h2>Cabai Merah · Hari ke-61</h2><p>Update petani + field monitor + data cuaca digunakan untuk mendeteksi risiko lebih awal.</p></div>
+  <div class="card"><div class="section-head" style="margin-top:0"><h2>Progress Produksi</h2><span>Aktual</span></div><div class="chart"><div class="bar" style="height:30%"><span>15</span></div><div class="bar" style="height:45%"><span>30</span></div><div class="bar" style="height:58%"><span>45</span></div><div class="bar" style="height:72%"><span>60</span></div><div class="bar" style="height:84%"><span>75</span></div><div class="bar" style="height:94%"><span>90</span></div></div><div style="height:18px"></div></div>
+  <div class="card"><div class="section-head" style="margin-top:0"><h2>Timeline</h2></div><div class="timeline"><div class="step done"><div class="dot">✓</div><div><b>Field verification</b><p>5 Sep · Lahan dan tanaman sesuai.</p></div></div><div class="step done"><div class="dot">✓</div><div><b>Input verification</b><p>7 Sep · Pupuk dan pestisida tercatat.</p></div></div><div class="step"><div class="dot">3</div><div><b>Monitoring pertumbuhan</b><p>11 Sep · Menunggu update terbaru.</p></div></div><div class="step"><div class="dot">4</div><div><b>Pre-harvest check</b><p>Estimasi 25 Sep.</p></div></div></div></div>
+</div>
+</section>
+
+<!-- FINANCING -->
+<section id="financing" class="screen"><div class="page">
+<h1 class="page-title">Pembiayaan & Escrow</h1><p class="page-sub">Dana dicairkan bertahap berdasarkan pencapaian milestone.</p>
+<div class="stats"><div class="stat"><span>Total escrow</span><b>Rp27 Jt</b></div><div class="stat"><span>Released</span><b>Rp18,4 Jt</b></div><div class="stat"><span>Next milestone</span><b>Rp4,2 Jt</b></div><div class="stat"><span>Reserve risk</span><b>Rp4,4 Jt</b></div></div>
+<div class="card" style="margin-top:14px"><div class="section-head" style="margin-top:0"><h2>Milestone Financing</h2></div><table class="table"><tr><th>Tahap</th><th>Alokasi</th><th>Status</th></tr><tr><td>Persiapan</td><td>Rp5 Jt</td><td class="low">Released ✓</td></tr><tr><td>Penanaman</td><td>Rp7,5 Jt</td><td class="low">Released ✓</td></tr><tr><td>Pemeliharaan</td><td>Rp5,9 Jt</td><td class="low">Released ✓</td></tr><tr><td>Pre-harvest</td><td>Rp4,2 Jt</td><td class="medium">Pending</td></tr></table><button class="btn primary full" onclick="releaseMilestone()">Release Milestone · Simulasi</button></div>
+</div></section>
+
+<!-- CONTRACTS -->
+<section id="contracts" class="screen"><div class="page">
+<h1 class="page-title">Kontrak Off-taker</h1><p class="page-sub">Kepastian pasar melalui kesepakatan sebelum produksi.</p>
+<div class="card"><div class="section-head" style="margin-top:0"><h2>🌶️ Cabai Merah Premium</h2><span class="badge">AKTIF</span></div><table class="table"><tr><td>Off-taker</td><td><b>CV Pangan Jaya</b></td></tr><tr><td>Harga kontrak</td><td><b>Rp25.000/kg</b></td></tr><tr><td>Volume</td><td><b>2.400 kg</b></td></tr><tr><td>Kualitas</td><td><b>Grade A / B</b></td></tr><tr><td>Delivery</td><td><b>30 Sep 2026</b></td></tr></table></div>
+<div class="card"><span class="hero-label">PRICE PROTECTION</span><h2 style="font-size:16px;margin:6px 0">Bagaimana jika harga pasar turun?</h2><p style="font-size:10px;color:var(--muted);line-height:1.6">Jika harga pasar menjadi Rp18.000/kg, harga kontrak tetap Rp25.000/kg selama volume dan kualitas memenuhi ketentuan kontrak.</p><div class="stats"><div class="stat"><span>Harga pasar</span><b>Rp18K</b></div><div class="stat"><span>Harga kontrak</span><b class="low">Rp25K</b></div></div></div>
+</div></section>
+
+<!-- RISK -->
+<section id="risk" class="screen"><div class="page">
+<h1 class="page-title">Risiko & Asuransi</h1><p class="page-sub">Deteksi risiko lebih awal dan siapkan mitigasi.</p>
+<div class="card score-wrap"><span class="hero-label">RISK SCORE · CABAI KEDIRI</span><div class="score"><b>88</b></div><b class="low">LOW RISK</b></div>
+<div class="card"><div class="section-head" style="margin-top:0"><h2>Risk Factors</h2></div><div class="alert" style="margin-bottom:9px"><div class="alert-icon">🌧️</div><div><b>Curah hujan meningkat</b><p>Potensi penyakit tanaman. Rekomendasi: monitoring tambahan.</p></div></div><div class="alert" style="background:#edf8f0;border-color:#d8eadc"><div class="alert-icon">📈</div><div><b>Permintaan pasar stabil</b><p>Kontrak off-taker aktif membantu menekan risiko harga.</p></div></div></div>
+<div class="card"><div class="section-head" style="margin-top:0"><h2>Perlindungan Risiko</h2></div><div class="stats"><div class="stat"><span>Insurance</span><b class="low">Active</b></div><div class="stat"><span>Reserve fund</span><b>Rp4,4 Jt</b></div></div><button class="btn primary full" style="margin-top:12px" onclick="toast('Simulasi klaim dikirim untuk verifikasi.')">Simulasikan Klaim</button></div>
+</div></section>
+
+<!-- SETTLEMENT -->
+<section id="settlement" class="screen"><div class="page">
+<h1 class="page-title">Settlement</h1><p class="page-sub">Penyelesaian transaksi setelah panen terverifikasi.</p>
+<div class="hero-green"><h2>🌾 Harvest Verified ✓</h2><p>Volume dan kualitas panen telah diverifikasi. Pembayaran off-taker siap diselesaikan.</p></div>
+<div class="stats"><div class="stat"><span>Panen</span><b>2.400 kg</b></div><div class="stat"><span>Payment</span><b>Rp60 Jt</b></div><div class="stat"><span>Principal</span><b>Rp27 Jt</b></div><div class="stat"><span>Return</span><b class="low">Rp3,19 Jt</b></div></div>
+<div class="card" style="margin-top:14px"><div class="section-head" style="margin-top:0"><h2>Settlement Breakdown</h2></div><table class="table"><tr><td>Pembayaran off-taker</td><td><b>Rp60.000.000</b></td></tr><tr><td>Pengembalian principal</td><td><b>Rp27.000.000</b></td></tr><tr><td>Imbal hasil investor</td><td><b>Rp3.186.000</b></td></tr><tr><td>Hak residual petani</td><td><b>Rp29.814.000</b></td></tr></table><button class="btn primary full" onclick="settle()">Konfirmasi Settlement · Simulasi</button></div>
+</div></section>
+
+</main>
+
+<nav class="bottom">
+<button class="active" data-screen="dashboard"><span>⌂</span>Beranda</button>
+<button data-screen="projects"><span>▦</span>Proyek</button>
+<button class="scan" onclick="showScreen('detail')"><span>⌁</span></button>
+<button data-screen="monitoring"><span>◉</span>Monitoring</button>
+<button onclick="toast('Halaman profil dalam pengembangan.')"><span>♙</span>Akun</button>
+</nav>
+</div>
+
+<div class="modal-bg" id="modal"><div class="modal">
+<h3>Danai Proyek</h3><p>Masukkan nominal pendanaan. Ini hanya simulasi prototype dan tidak memproses uang sungguhan.</p>
+<input class="input" id="fundInput" type="number" min="100000" step="100000" value="5000000">
+<div class="actions"><button class="btn secondary" onclick="closeModal()">Batal</button><button class="btn primary" onclick="fund()">Konfirmasi</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const screens={
+dashboard:['Beranda',''],
+projects:['Proyek',''],
+detail:['Detail Proyek',''],
+monitoring:['Monitoring',''],
+financing:['Pembiayaan',''],
+contracts:['Kontrak',''],
+risk:['Risiko',''],
+settlement:['Settlement','']
+};
+function showScreen(id){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ const el=document.getElementById(id); if(el) el.classList.add('active');
+ document.querySelectorAll('.bottom button[data-screen]').forEach(x=>x.classList.toggle('active',x.dataset.screen===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.bottom button[data-screen]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.screen)));
+function openFunding(){document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function fund(){
+ const val=Number(document.getElementById('fundInput').value||0);
+ if(val<100000){toast('Minimal simulasi Rp100.000');return}
+ const total=125000000+val;
+ document.getElementById('totalFund').textContent='Rp'+total.toLocaleString('id-ID');
+ closeModal();toast('Pendanaan simulasi berhasil dicatat.');
+}
+function releaseMilestone(){toast('Milestone disetujui. Dana simulasi dirilis dari escrow.')}
+function settle(){toast('Settlement simulasi berhasil dikonfirmasi.')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2800)}
+</script>
+</body>
+</html>
